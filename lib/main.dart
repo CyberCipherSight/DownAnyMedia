@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:io';
 
 import 'package:file_selector/file_selector.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_mobile_ads/google_mobile_ads.dart';
@@ -39,6 +40,15 @@ class AdMobTestIds {
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  LicenseRegistry.addLicense(() async* {
+    yield LicenseEntryWithLineBreaks([
+      'DownAnyMedia',
+    ], await rootBundle.loadString('LICENSE'));
+    yield LicenseEntryWithLineBreaks([
+      'youtubedl-android 0.18.1',
+      'FFmpeg (GPL-enabled build)',
+    ], await rootBundle.loadString('licenses/GPL-3.0.txt'));
+  });
   if (Platform.isAndroid) {
     await MobileAds.instance.initialize();
   }
@@ -3793,9 +3803,7 @@ class _DownloaderPageState extends State<DownloaderPage> {
                         children: [
                           _EngineStatusPanel(
                             info: _engineInfo,
-                            onRefresh: _isRunning
-                                ? null
-                                : _refreshEngineStatus,
+                            onRefresh: _isRunning ? null : _refreshEngineStatus,
                           ),
                           const SizedBox(height: 12),
                           _FolderPanel(
@@ -3873,10 +3881,26 @@ class _DownloaderPageState extends State<DownloaderPage> {
             'You can download audio or video only if you own it, have '
             'permission to download it, or are legally allowed to save it.\n\n'
             'Supports audio and video downloads from supported social, '
-            'entertainment, and media platforms.',
+            'entertainment, and media platforms.\n\n'
+            'Powered by yt-dlp, Python, and FFmpeg through '
+            'youtubedl-android. The Android media library and the '
+            'bundled GPL-enabled FFmpeg build use GPLv3. '
+            'Original project files use the MIT License. '
+            'This software comes without warranty. '
+            'Source, build details, and download checksums are available '
+            'in the public DownAnyMedia repository.',
           ),
         ),
         actions: [
+          TextButton(
+            onPressed: () => showLicensePage(
+              context: context,
+              applicationName: 'DownAnyMedia',
+              applicationVersion: '1.0.0',
+              applicationLegalese: 'Copyright 2026 DownAnyMedia contributors',
+            ),
+            child: const Text('Open-source licenses'),
+          ),
           TextButton(
             onPressed: () => Navigator.of(context).pop(),
             child: const Text('Close'),
@@ -3950,6 +3974,16 @@ class _EngineStatusPanel extends StatelessWidget {
                 fontWeight: FontWeight.w700,
               ),
             ),
+            const SizedBox(height: 8),
+            Text('yt-dlp: ${info.ytDlpVersion}'),
+            Text('FFmpeg: ${info.ffmpegVersion}'),
+            if (info.androidAbi != null) Text('CPU: ${info.androidAbi}'),
+            if (info.message != null && info.message!.isNotEmpty) ...[
+              const SizedBox(height: 8),
+              SelectableText(info.message!),
+            ],
+            if (info.ffmpegExecutionTest != null && !working)
+              SelectableText(info.ffmpegExecutionTest!),
           ],
         ),
       ),

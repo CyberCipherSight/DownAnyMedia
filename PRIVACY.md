@@ -30,5 +30,6 @@ The optional remote-config cache stores decrypted JSON in SharedPreferences. Nev
 - Notification permission is requested where Android requires it.
 - Legacy external-storage write permission is declared only through Android API 28.
 - Share/link intents allow explicitly supplied text or URLs from other apps.
+- The merged release manifest also includes Google Ads advertising ID, ad-services ID/attribution/topics, and wake-lock permissions contributed by dependencies. Android also infers legacy read-storage permission through API 28 from the legacy write permission. These are visible in the built APK, even though they are not all written directly in the app's own manifest.
 
 The app reads the clipboard when the user chooses Paste. Review the source and your chosen dependency versions when assessing a custom distribution.

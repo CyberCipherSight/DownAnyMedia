@@ -82,3 +82,8 @@ venv/
 **/.kotlin/
 **/.cxx/
 **/build/
+
+# Private release signing material and local emulator state
+.release-signing/
+.emulator/
+/release-artifacts/

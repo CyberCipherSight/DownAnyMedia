@@ -1,6 +1,24 @@
 # DownAnyMedia
 
-A Flutter app for downloading MP3 audio and video with yt-dlp and FFmpeg. The project includes Android, Linux, and Windows runners, with local download history and a sequential playlist queue.
+An Android-first Flutter app for downloading MP3 audio and video with yt-dlp and FFmpeg, with local history and a sequential playlist queue. Android is the primary release target. Linux and Windows runners remain available in source form.
+
+## Download the Android app
+
+Get an APK from [GitHub Releases](https://github.com/CyberCipherSight/DownAnyMedia/releases/latest). Choose **arm64-v8a** for most modern Android phones, **armeabi-v7a** for a 32-bit ARM device, or **x86_64** for an Intel/AMD emulator. Each APK is a standalone installer; install only the one matching your device.
+
+See the [Android guide](docs/ANDROID.md) for installation, size measurements, signing details, and an explanation of the screenshots and emulator checks. Desktop binaries are not part of this Android release.
+
+## Android screenshots
+
+These are unaltered captures of the release APK running in a fresh Android emulator. The demo media is a locally generated test clip, not a personal download. See the Android guide for the test scope.
+
+| Home | Completed download |
+| --- | --- |
+| <img src="docs/screenshots/android-home.png" alt="Android downloader home" width="280"> | <img src="docs/screenshots/android-completed.png" alt="Android download completed and history" width="280"> |
+
+| Engine status | Settings |
+| --- | --- |
+| <img src="docs/screenshots/android-engine.png" alt="Android engine status and versions" width="280"> | <img src="docs/screenshots/android-settings.png" alt="Android download and appearance settings" width="280"> |
 
 ## Features
 
@@ -36,7 +54,7 @@ flutter run -d <device-id>
 
 The debug APK is generated under `build/app/outputs/flutter-apk/`. Flutter creates machine-specific Gradle wrapper and SDK configuration files as needed; these are excluded from version control. Android dependencies download yt-dlp, Python, and FFmpeg through `youtubedl-android` **0.18.1**. Android saves completed files through MediaStore under the shared Downloads directory (`Download/DownAnyMedia`, with playlist subfolders).
 
-Release signing is intentionally unconfigured. To build your own signed release, create a private `android/key.properties` with `storeFile`, `storePassword`, `keyAlias`, and `keyPassword`. `storeFile` is resolved relative to `android/`. Never commit that file or a keystore. An optional `admobApplicationId` overrides the public Google test application ID. No signing keys or store credentials are provided.
+The public source does not contain release signing credentials. To build your own signed release, create a private `android/key.properties` with `storeFile`, `storePassword`, `keyAlias`, and `keyPassword`. `storeFile` is resolved relative to `android/`. Never commit that file or a keystore. An optional `admobApplicationId` overrides the public Google test application ID. No signing keys or store credentials are provided. To reproduce the optimized packaging with your own signing credentials, run `python3 tools/android/build_release.py`; it builds per-ABI APKs from a neutral temporary path and keeps debug symbols outside the APKs.
 
 ### Linux
 

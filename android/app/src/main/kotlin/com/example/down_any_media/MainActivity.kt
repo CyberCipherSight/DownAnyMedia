@@ -518,6 +518,7 @@ class MainActivity : FlutterActivity() {
                     ),
                 )
             } catch (error: Throwable) {
+                android.util.Log.w("DownAnyMedia", "Engine status check failed", error)
                 postSuccess(
                     result,
                     mapOf(

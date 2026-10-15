@@ -41,9 +41,8 @@ android {
         manifestPlaceholders["admobApplicationId"] =
             releaseProperty("admobApplicationId")
                 ?: "ca-app-pub-3940256099942544~3347511713"
-        ndk {
-            abiFilters += listOf("x86", "x86_64", "armeabi-v7a", "arm64-v8a")
-        }
+        // Flutter selects supported ABIs. Do not force every ABI here: it
+        // conflicts with --split-per-abi and duplicates large media runtimes.
     }
 
     signingConfigs {
@@ -60,6 +59,12 @@ android {
     buildTypes {
         release {
             signingConfig = signingConfigs.getByName("release")
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro",
+            )
         }
     }
 
