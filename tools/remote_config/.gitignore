@@ -1,0 +1,5 @@
+# Never commit the key, the plaintext config, or the version tracker.
+secret.key
+config.json
+.last_version
+jadugame

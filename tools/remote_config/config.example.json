@@ -1,0 +1,27 @@
+{
+  "configVersion": 1,
+  "updatedAt": "2026-07-07T12:00:00Z",
+  "platforms": {
+    "youtube": true,
+    "reddit": true,
+    "facebook": true,
+    "instagram": true,
+    "twitter": true,
+    "tiktok": true,
+    "soundcloud": true,
+    "vimeo": true,
+    "twitch": true,
+    "spotify": false,
+    "generic": true
+  },
+  "platformMessages": {
+    "youtube": "YouTube downloads are temporarily unavailable. Please try again later."
+  },
+  "ads": {
+    "masterEnabled": true,
+    "banner": { "enabled": true, "unitId": "ca-app-pub-3940256099942544/6300978111" },
+    "interstitial": { "enabled": true, "unitId": "ca-app-pub-3940256099942544/1033173712", "showAfterEveryNDownloads": 3 },
+    "rewarded": { "enabled": true, "unitId": "ca-app-pub-3940256099942544/5224354917", "adFreeHours": 1 }
+  },
+  "notice": null
+}
